@@ -22,11 +22,19 @@ def getRandomName(lines):
     return name.rstrip().title()
 
 
+def getRandomCode():
+    return ''
+
+
 def generate():
   with open('nombres.txt','r') as fnom:
-    with open('apellidos.txt','r') as fapp:
       nombres  = fnom.readlines()
+
+  with open('apellidos.txt','r') as fapp:  
       apellidos = fapp.readlines()
+
+  with open('ucos.txt','r') as fuco:
+    ucos = fuco.readlines()
       
   with open('candid.txt','w') as fcan:
     for i in range(1,100):
@@ -46,6 +54,9 @@ def generate():
       print linea
       fcan.write(linea+"\n")
 
+  with open('puestos.txt','w') as fp:
+    for i in range(1,50):
+      pass
 
 if __name__ == "__main__":
     generate()
