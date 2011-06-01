@@ -23,18 +23,20 @@ def getRandomName(lines):
 
 
 def getRandomCode():
-    return ''
+    return '5J'+str(random.randint(100,999))+'/'+str(random.randint(100,999))
 
 
 def generate():
   with open('nombres.txt','r') as fnom:
-      nombres  = fnom.readlines()
+    nombres  = fnom.readlines()
 
   with open('apellidos.txt','r') as fapp:  
-      apellidos = fapp.readlines()
+    apellidos = fapp.readlines()
 
   with open('ucos.txt','r') as fuco:
     ucos = fuco.readlines()
+
+  codes = [getRandomCode() for i in ucos]
       
   with open('candid.txt','w') as fcan:
     for i in range(1,100):
@@ -49,14 +51,18 @@ def generate():
       
       nota = str(random.randint(5,9))+"."+str(random.randint(0,9))
 
-      linea = getRandomDNI()+";"+nombrecompleto+";"+fecha+";"+nota
+      prefs = random.sample(codes,3)
+      pstring = str(prefs[1])+";"+str(prefs[2])+";"+str(prefs[0])
+      linea = getRandomDNI()+";"+nombrecompleto+";"+fecha+";"+nota+";"+pstring+";"
 
       print linea
       fcan.write(linea+"\n")
 
-  with open('puestos.txt','w') as fp:
-    for i in range(1,50):
-      pass
-
+  with open('puest.txt','w') as fp:
+    i=0;
+    for uco in ucos:
+      fp.write(codes[i]+";"+uco.rstrip()+";\n")
+      i=i+1
+      
 if __name__ == "__main__":
     generate()
