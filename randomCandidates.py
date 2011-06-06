@@ -4,6 +4,7 @@ import unicodedata
 import random
 
 dnihash = "TRWAGMYFPDXBNJZSQVHLCKE"
+dir = 'dataCandidates/'
 
 # For troubles with Spanish names
 def strip_accents(string):
@@ -27,18 +28,18 @@ def getRandomCode():
 
 
 def generate():
-  with open('nombres.txt','r') as fnom:
+  with open(dir+'nombres.txt','r') as fnom:
     nombres  = fnom.readlines()
 
-  with open('apellidos.txt','r') as fapp:  
+  with open(dir+'apellidos.txt','r') as fapp:  
     apellidos = fapp.readlines()
 
-  with open('ucos.txt','r') as fuco:
+  with open(dir+'ucos.txt','r') as fuco:
     ucos = fuco.readlines()
 
   codes = [getRandomCode() for i in ucos]
       
-  with open('candid.txt','w') as fcan:
+  with open(dir+'candid.txt','w') as fcan:
     for i in range(1,100):
       
       fecha = (str(random.randint(1,28))+";"+
@@ -58,7 +59,7 @@ def generate():
       print linea
       fcan.write(linea+"\n")
 
-  with open('puest.txt','w') as fp:
+  with open(dir+'puest.txt','w') as fp:
     i=0;
     for uco in ucos:
       fp.write(codes[i]+";"+uco.rstrip()+";\n")
