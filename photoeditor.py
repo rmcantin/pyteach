@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 #
 # This a simple exercise to learn a bit about wxWidgets and PIL
-# Author: Ruben Martinez-Cantin <rmcantin@gmail.com>
+# Author: Ruben Martinez-Cantin <rmcantin@unizar.es>
 #
 
 import os
