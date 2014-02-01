@@ -9,33 +9,31 @@ import wx
 import numpy as np # NumPy
 from PIL import Image,ImageFilter       # PIL
 
- 
-class PhotoEditor(wx.App):
-    def __init__(self, redirect=False, filename=None):
-        wx.App.__init__(self, redirect, filename)
-        self.frame = wx.Frame(None, title='My Photo Editor')
- 
+class MainWindow(wx.Frame):
+    def __init__(self, parent=None, title='My Photo Editor'):
+        super(wx.Frame).__init__(self,parent,title)
         self.panel = wx.Panel(self.frame)
- 
         self.PhotoMaxSize = 300
- 
         self.createWidgets()
-        self.frame.Show()
- 
-    def createWidgets(self):
+
+     def createWidgets(self):
         """ Creates the layout of the frame """
         
         instructions = 'Browse for an image'
         size = self.PhotoMaxSize
         img = wx.EmptyImage(size,size)
+
+        # Interactive elements
         self.imageCtrl = wx.StaticBitmap(self.panel, wx.ID_ANY,
                                          wx.BitmapFromImage(img))
 
         self.imageCtrl2 = wx.StaticBitmap(self.panel, wx.ID_ANY,
                                           wx.BitmapFromImage(img))
-
-        instructLbl = wx.StaticText(self.panel, label=instructions)
         self.photoTxt = wx.TextCtrl(self.panel, size=(200,-1))
+        
+        instructLbl = wx.StaticText(self.panel, label=instructions)
+
+        # Buttons
         browseBtn = wx.Button(self.panel, label='Browse')
         browseBtn.Bind(wx.EVT_BUTTON, self.onBrowse)
 
@@ -44,7 +42,8 @@ class PhotoEditor(wx.App):
 
         medianBtn = wx.Button(self.panel, label='Median')
         medianBtn.Bind(wx.EVT_BUTTON, self.onMedian)
- 
+
+        # Layout
         self.mainSizer = wx.BoxSizer(wx.VERTICAL)
         box = wx.StaticBox(self.panel, -1, "Photos")
         self.photoSizer = wx.StaticBoxSizer(box,wx.HORIZONTAL)
@@ -63,9 +62,52 @@ class PhotoEditor(wx.App):
         self.mainSizer.Add(self.sizer, 0, wx.ALL, 5)
  
         self.panel.SetSizer(self.mainSizer)
+        self.panel.SetAutoLayout(True)
         self.mainSizer.Fit(self.frame)
  
         self.panel.Layout()
+
+        
+ 
+class PhotoEditor(wx.App):
+    def __init__(self, redirect=False, filename=None):
+        wx.App.__init__(self, redirect, filename)
+        self.frame = wx.Frame(None, title='My Photo Editor')
+ 
+        self.panel = wx.Panel(self.frame)
+ 
+        self.PhotoMaxSize = 300
+       
+        # Setting up the menu.
+        filemenu= wx.Menu()
+
+        # wx.ID_ABOUT and wx.ID_EXIT are standard ids provided by wxWidgets.
+        menuAbout = filemenu.Append(wx.ID_ABOUT, "&About"," Information about this program")
+        menuExit = filemenu.Append(wx.ID_EXIT,"E&xit"," Terminate the program")
+
+        # Creating the menubar.
+        menuBar = wx.MenuBar()
+        menuBar.Append(filemenu,"&File") # Adding the "filemenu" to the MenuBar
+ 
+        # Set events.
+        self.frame.Bind(wx.EVT_MENU, self.OnAbout, menuAbout)
+        self.frame.Bind(wx.EVT_MENU, self.OnExitApp, menuExit) 
+
+        self.frame.Show()
+
+        self.frame.SetMenuBar(menuBar)  # Adding the MenuBar to the Frame content.
+
+ 
+   
+    def OnAbout(self, event):
+        # A message dialog box with an OK button. wx.OK is a standard ID in wxWidgets.
+        dlg = wx.MessageDialog( self.frame, "A small photo editor", "About Sample Editor", wx.OK)
+        dlg.ShowModal() # Show it
+        dlg.Destroy() # finally destroy it when finished.
+
+    def OnExitApp(self, event):
+        self.frame.Close(True)  # Close the frame.
+
 
     # Buttons  #################################
     def onBrowse(self, event):
