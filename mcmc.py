@@ -34,7 +34,7 @@ def sample_proposal(sigma):
 # DEFINITIONS:
 # ============
 
-SA = True                #  If no annealing, the algorithm is exactly MH
+SA = False                #  If no annealing, the algorithm is exactly MH
 
 N = 5000                  #  Number of iterations.
 sigma = 2                 #  Standard deviation of the target components.
