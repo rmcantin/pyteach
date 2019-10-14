@@ -70,7 +70,7 @@ def sweep(f,x,y,w):
             elif x_new < x:
                 xl = x_new
             else:
-                print "Error. Slice colapsed!"
+                print("Error. Slice colapsed!")
                 modified=False
         else:
             modified=False
@@ -93,7 +93,7 @@ def mcmc(sampler,n_samples):
     x = np.zeros((n_samples,1))  #  Markov chain (unknowns).
     x[0] = 20*np.random.rand(1)       #  Initial point of the Markov Chain.
 
-    for i in xrange(1,n_samples):
+    for i in range(1,n_samples):
         if sampler == 'mh':
             x[i] = mh_step(x[i-1],sigma_prop)
         elif sampler == 'sa':
@@ -102,7 +102,7 @@ def mcmc(sampler,n_samples):
         elif sampler == 'slice':
             x[i] = slice_step(x[i-1],sigma_prop)
         else:
-            print "Error. Sampler not supported."
+            print("Error. Sampler not supported.")
             break
         
     return x
@@ -113,7 +113,7 @@ def plot_all(x, spIndex , mcIndex ):
     pl.subplot(spIndex)
     x_t = np.linspace(-10,20,1000)
     n, bins, patches = pl.hist(x[0:mcIndex], N_bins,
-                               normed=1, facecolor='green', alpha=0.75)
+                               density=1, facecolor='green', alpha=0.75)
     pl.plot(x_t,fmixture(x_t),'k',linewidth=2)
     pl.axis([-10, 20, 0, 0.15])
     plot_name = 'Iteration = %d' % mcIndex
@@ -122,11 +122,11 @@ def plot_all(x, spIndex , mcIndex ):
 
 N = 5000                #  Number of iterations.
 sampler_name = 'mh'
-begin = time.clock()
+begin = time.process_time()
 particles = mcmc(sampler_name,N)
 
-print particles
-print time.clock()-begin
+print(particles)
+print(time.process_time()-begin)
 
 plot_all(particles,221,100)
 plot_all(particles,222,500)
