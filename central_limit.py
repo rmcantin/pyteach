@@ -15,9 +15,9 @@ import matplotlib.animation as animation
 # ********************* Configuration parameters ****************************
 # For the Galton board simulator, used a 2 face dice (coin). Then, the
 # number of dices represents the number of pivot rows.
-faces = 2
-dices = 20
-iters = 2000
+faces = 6
+dices = 5
+iters = 100
 # ***************************************************************************
 
 fig, ax = plt.subplots()
@@ -72,5 +72,5 @@ def animate(i):
     verts[1::5,1] = top
     verts[2::5,1] = top
 
-ani = animation.FuncAnimation(fig, animate, iters, interval=5, repeat=False)
+ani = animation.FuncAnimation(fig, animate, frames=iters, interval=5, repeat=False)
 plt.show()
